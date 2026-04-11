@@ -1,6 +1,6 @@
 /**
- * 引用 public/ 下文件的 URL。子路径部署（如 GitHub Pages `/<repo>/`）时不能用站点根路径 `/xxx`，
- * 需与 Vite 的 `base` 一致：开发为 `/`，生产构建当前为 `./`。
+ * 引用 public/ 下文件的 URL。需与 Vite `import.meta.env.BASE_URL` 一致。
+ * GitHub Actions 部署 Pages 时会设置 VITE_BASE=/<repo>/；本地未设置时多为 `./`。
  */
 export function publicAssetUrl(path: string): string {
   const raw = path.replace(/^\/+/, '');

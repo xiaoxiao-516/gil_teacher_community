@@ -32,6 +32,9 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          # 与 GitHub Pages 项目站路径一致；避免用户打开 /repo（无尾斜杠）时 ./ 静态资源被解析到 github.io 根路径而全部 404
+          VITE_BASE: /${{ github.event.repository.name }}/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

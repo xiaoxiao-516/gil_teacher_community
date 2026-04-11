@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>小鹿爱学 · 教师社区</title>
+    <meta
+      name="description"
+      content="让每一个好用的功能，在真实的课堂里闪光。教师社区：经验分享、学情与教学管理灵感持续上新。"
+    />
+    <meta property="og:title" content="小鹿爱学 · 教师社区" />
+    <meta
+      property="og:description"
+      content="让每一个好用的功能，在真实的课堂里闪光。经验分享与教学灵感，持续上新。"
+    />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <!--
+      子路径部署：应用实际挂在 /xxx/ 下时填写，例如 content="/teacher/"
+      留空则根据当前 share.html 所在目录自动拼出社区链接（与 index.html 同目录时无需填写）
+    -->
+    <meta name="app-subpath" content="" />
+    <style>
+      :root {
+        --primary: #4a4fed;
+        --primary-2: #6574fc;
+        --bg-top: #f5faff;
+        --bg-bottom: #ffffff;
+        --text: #101019;
+        --text-2: #444963;
+        --text-3: #646b8a;
+        --line: #e9ecf5;
+        --radius: 16px;
+        --shadow: 0 16px 56px rgba(16, 18, 25, 0.08);
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        min-height: 100%;
+        font-family:
+          'Noto Sans SC',
+          'PingFang SC',
+          'Microsoft YaHei',
+          system-ui,
+          sans-serif;
+        color: var(--text);
+        background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-top) 52%, var(--bg-bottom) 100%);
+        -webkit-font-smoothing: antialiased;
+      }
+      .wrap {
+        max-width: 520px;
+        margin: 0 auto;
+        padding: clamp(28px, 6vw, 48px) clamp(20px, 5vw, 32px) 40px;
+      }
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 28px;
+      }
+      .brand-mark {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(145deg, var(--primary-2), var(--primary));
+        box-shadow: 0 4px 14px rgba(74, 79, 237, 0.35);
+      }
+      .brand-name {
+        font-size: 18px;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        color: var(--text);
+      }
+      .card {
+        background: #fff;
+        border-radius: var(--radius);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow);
+        padding: clamp(24px, 5vw, 32px);
+      }
+      h1 {
+        margin: 0 0 12px;
+        font-size: clamp(22px, 5vw, 26px);
+        font-weight: 700;
+        line-height: 1.35;
+        color: var(--text);
+      }
+      .tagline {
+        margin: 0 0 24px;
+        font-size: 15px;
+        line-height: 1.65;
+        color: var(--text-2);
+      }
+      ul {
+        margin: 0 0 28px;
+        padding: 0 0 0 1.15em;
+        color: var(--text-3);
+        font-size: 14px;
+        line-height: 1.75;
+      }
+      li + li {
+        margin-top: 10px;
+      }
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 0 22px;
+        border-radius: 22px;
+        font-size: 15px;
+        font-weight: 500;
+        text-decoration: none;
+        cursor: pointer;
+        border: none;
+        transition:
+          filter 0.2s ease,
+          transform 0.15s ease;
+      }
+      .btn:active {
+        transform: scale(0.98);
+      }
+      .btn-primary {
+        background: var(--primary-2);
+        color: #fff;
+        box-shadow: 0 4px 16px rgba(101, 116, 252, 0.35);
+      }
+      .btn-primary:hover {
+        filter: brightness(0.96);
+      }
+      .btn-ghost {
+        background: #f4f7fe;
+        color: var(--text-2);
+        border: 1px solid var(--line);
+      }
+      .btn-ghost:hover {
+        background: #e9ecf5;
+      }
+      .footnote {
+        margin-top: 28px;
+        font-size: 12px;
+        line-height: 1.6;
+        color: var(--text-3);
+        text-align: center;
+      }
+      .footnote code {
+        font-size: 11px;
+        padding: 2px 6px;
+        border-radius: 6px;
+        background: rgba(74, 79, 237, 0.08);
+        color: var(--primary);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true"></div>
+        <span class="brand-name">小鹿爱学</span>
+      </div>
+
+      <div class="card">
+        <h1>教师社区</h1>
+        <p class="tagline">让每一个好用的功能，在真实的课堂里闪光。</p>
+        <ul>
+          <li>教学经验与课堂实录，按学情与热度智能排序</li>
+          <li>业务标签 + 学科色标签，快速识别内容类型</li>
+          <li>点赞与详情阅读，内容持续上新</li>
+        </ul>
+        <div class="actions">
+          <!-- 与 src/main.tsx 中 HashRouter 一致，必须带 #/community 才会进教师社区，而不是默认学管等其它入口 -->
+          <a class="btn btn-primary" id="open-app" href="index.html#/community">进入教师社区</a>
+          <button type="button" class="btn btn-ghost" id="copy-link">复制社区链接</button>
+        </div>
+      </div>
+
+      <p class="footnote">
+        对外请分享「社区链接」（含 <code>#/community</code>），打开后直达教师社区信息流。<br />
+        若 SPA 不在 <code>share.html</code> 同级目录而在子路径（如 <code>/teacher/</code>），请在页面
+        <code>&lt;meta name="app-subpath" content="/teacher/"&gt;</code> 中填写该前缀。
+      </p>
+    </div>
+
+    <script>
+      (function () {
+        function explicitSubpath() {
+          var meta = document.querySelector('meta[name="app-subpath"]');
+          if (!meta) return null;
+          var raw = (meta.getAttribute('content') || '').trim();
+          if (!raw) return null;
+          var s = raw;
+          if (s === '/' || s === '') return null;
+          if (!s.startsWith('/')) s = '/' + s;
+          if (!s.endsWith('/')) s += '/';
+          return s;
+        }
+
+        function communityUrl() {
+          var loc = window.location;
+          var sub = explicitSubpath();
+
+          if (loc.protocol === 'file:') {
+            var noHash = loc.href.split('#')[0];
+            var j = noHash.lastIndexOf('/');
+            var dir = j >= 0 ? noHash.slice(0, j + 1) : noHash;
+            return dir + 'index.html#/community';
+          }
+
+          if (sub) {
+            return loc.origin + sub + '#/community';
+          }
+
+          var pathname = loc.pathname.replace(/share\.html$/i, '');
+          if (!pathname.endsWith('/')) pathname += '/';
+          return loc.origin + pathname + '#/community';
+        }
+
+        var copyBtn = document.getElementById('copy-link');
+        var openApp = document.getElementById('open-app');
+        if (openApp) {
+          try {
+            if (window.location.protocol === 'http:' || window.location.protocol === 'https:') {
+              openApp.href = communityUrl();
+            }
+          } catch (e) {}
+        }
+
+        function fallbackCopy(text) {
+          var ta = document.createElement('textarea');
+          ta.value = text;
+          ta.setAttribute('readonly', '');
+          ta.style.position = 'fixed';
+          ta.style.left = '-9999px';
+          document.body.appendChild(ta);
+          ta.select();
+          try {
+            document.execCommand('copy');
+          } catch (err) {}
+          document.body.removeChild(ta);
+        }
+
+        if (!copyBtn) return;
+        copyBtn.addEventListener('click', function () {
+          var url = communityUrl();
+          var label = copyBtn.textContent;
+          var done = function (ok) {
+            copyBtn.textContent = ok ? '已复制' : '复制失败';
+            setTimeout(function () {
+              copyBtn.textContent = label;
+            }, 2000);
+          };
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url).then(
+              function () {
+                done(true);
+              },
+              function () {
+                fallbackCopy(url);
+                done(true);
+              }
+            );
+          } else {
+            fallbackCopy(url);
+            done(true);
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>

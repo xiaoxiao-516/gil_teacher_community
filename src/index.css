@@ -1,0 +1,196 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  @apply bg-fill-light text-gray-1 antialiased;
+  font-family:
+    'Alibaba PuHuiTi 3.0',
+    'Noto Sans SC',
+    system-ui,
+    sans-serif;
+}
+
+/* 设计稿基准 1000×600，大屏按比例放大可视区域 */
+.app-scale {
+  min-height: 100%;
+}
+
+/* 点赞：描边心放大 → 实心红心 → 略缩小回弹（danger-2 #FA5A57） */
+@keyframes like-heart-scale {
+  0% {
+    transform: scale(1);
+  }
+  28% {
+    transform: scale(1.42);
+  }
+  62% {
+    transform: scale(0.94);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes like-heart-path {
+  0%,
+  22% {
+    fill: none;
+    stroke: #646b8a;
+    stroke-width: 2px;
+  }
+  32%,
+  100% {
+    fill: #fa5a57;
+    stroke: #fa5a57;
+    stroke-width: 0;
+  }
+}
+
+.like-heart-wrap--animate {
+  animation: like-heart-scale 0.52s cubic-bezier(0.34, 1.45, 0.64, 1) forwards;
+  display: inline-flex;
+  transform-origin: center;
+}
+
+.like-heart-wrap--animate .like-heart-path {
+  animation: like-heart-path 0.52s ease forwards;
+}
+
+/* 瀑布流卡片：仅心略放大 + 实心红，无粒子、无数字弹动 */
+@keyframes like-heart-minimal-scale {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.22);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes like-heart-path-minimal {
+  0%,
+  18% {
+    fill: none;
+    stroke: #646b8a;
+    stroke-width: 2px;
+  }
+  40%,
+  100% {
+    fill: #fa5a57;
+    stroke: #fa5a57;
+    stroke-width: 0;
+  }
+}
+
+.like-heart-wrap--minimal {
+  animation: like-heart-minimal-scale 0.34s ease-out forwards;
+  display: inline-flex;
+  transform-origin: center;
+}
+
+.like-heart-wrap--minimal .like-heart-path {
+  animation: like-heart-path-minimal 0.34s ease forwards;
+}
+
+.like-heart-path--outline {
+  fill: none;
+  stroke: #646b8a;
+  stroke-width: 2px;
+}
+
+.like-heart-path--liked {
+  /* 实心填充由组件内 SVG fill="url(#…)" 渐变提供 */
+  stroke: none;
+  stroke-width: 0;
+}
+
+/* 主按钮式点赞（蓝底）：未赞白描边，已赞/动画仍用红心 */
+.like-btn--primary .like-heart-path--outline {
+  stroke: #ffffff;
+}
+
+.like-btn--primary .like-heart-wrap--animate .like-heart-path {
+  animation: like-heart-path-primary 0.52s ease forwards;
+}
+
+.like-btn--primary .like-heart-wrap--minimal .like-heart-path {
+  animation: like-heart-path-primary-minimal 0.34s ease forwards;
+}
+
+@keyframes like-heart-path-primary-minimal {
+  0%,
+  18% {
+    fill: none;
+    stroke: #ffffff;
+    stroke-width: 2px;
+  }
+  40%,
+  100% {
+    fill: #fa5a57;
+    stroke: #fa5a57;
+    stroke-width: 0;
+  }
+}
+
+@keyframes like-heart-path-primary {
+  0%,
+  22% {
+    fill: none;
+    stroke: #ffffff;
+    stroke-width: 2px;
+  }
+  32%,
+  100% {
+    fill: #fa5a57;
+    stroke: #fa5a57;
+    stroke-width: 0;
+  }
+}
+
+/* 点赞数：仅 +1 时的轻微弹动（整体数字，不拆位） */
+@keyframes like-count-pop {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.18);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.like-count--animate {
+  animation: like-count-pop 0.42s ease;
+  display: inline-block;
+  transform-origin: center;
+}
+
+/* 点赞：多颗心从触点向上飘散（AnimatedLikeButton → body portal） */
+@keyframes like-floating-heart-particle {
+  0% {
+    transform: translate(-50%, -50%) translate3d(0, 0, 0) scale(var(--lf-s0, 1));
+    opacity: 0.95;
+  }
+  100% {
+    transform: translate(-50%, -50%) translate3d(var(--lf-x, 0px), var(--lf-y, -100px), 0)
+      scale(var(--lf-s1, 0.35));
+    opacity: 0;
+  }
+}
+
+.like-floating-heart-particle {
+  pointer-events: none;
+  position: fixed;
+  z-index: 10000;
+  will-change: transform, opacity;
+}

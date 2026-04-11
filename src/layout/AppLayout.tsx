@@ -9,6 +9,7 @@ import {
   IconSidebarResource,
 } from '../components/SidebarNavIcons';
 import { StatusBar } from '../components/StatusBar';
+import { publicAssetUrl } from '../lib/publicAssetUrl';
 
 const navRowPrimary =
   'flex h-12 w-full shrink-0 items-center gap-2 rounded-xl py-1.5 pl-4 pr-4 text-[16px] font-medium leading-[1.5] no-underline transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-2';
@@ -53,7 +54,7 @@ export function AppLayout() {
                     aria-hidden
                   />
                   <img
-                    src="/logo-sidebar-mark.png"
+                    src={publicAssetUrl('logo-sidebar-mark.png')}
                     alt=""
                     width={24}
                     height={24}
@@ -108,7 +109,7 @@ export function AppLayout() {
 
             <div className="flex h-12 w-full shrink-0 items-center gap-2 rounded-xl py-1.5">
               <img
-                src="/sidebar-user-avatar.png"
+                src={publicAssetUrl('sidebar-user-avatar.png')}
                 alt="宋萍"
                 width={196}
                 height={196}
@@ -131,7 +132,7 @@ export function AppLayout() {
             }`}
           >
             <img
-              src="/collapse-arrow.svg"
+              src={publicAssetUrl('collapse-arrow.svg')}
               alt=""
               className={`h-full w-full ${collapsed ? 'scale-x-[-1]' : ''}`}
             />

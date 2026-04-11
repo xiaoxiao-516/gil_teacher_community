@@ -1,4 +1,5 @@
 import type { CommunityPost } from '../types/community';
+import { publicAssetUrl } from '../lib/publicAssetUrl';
 
 /** 较长正文示例（相对默认短文更长） */
 function longBodyForMock(): string {
@@ -17,7 +18,7 @@ function longBodyForMock(): string {
 
 /** public 根目录下中文文件名的封面路径 */
 function coverAsset(filename: string): string {
-  return `/${encodeURIComponent(filename)}`;
+  return publicAssetUrl(encodeURIComponent(filename));
 }
 
 /** 实拍横图 4:3（图片-1～4），按帖索引轮换，列表每行视觉上会依次穿插 */
@@ -282,9 +283,9 @@ function seededUInt(i: number): number {
 /** 话题标识路径（public 下 PNG 整图；列表/详情直接 `<img>` 展示）；?v= 用于替换高清资源后刷新缓存 */
 const TOPIC_BADGE_ASSET_VER = '3';
 const TOPIC_BADGE_URLS = [
-  `/tag-topic-class-score.svg?v=${TOPIC_BADGE_ASSET_VER}`,
-  `/tag-topic-learning-analysis.svg?v=${TOPIC_BADGE_ASSET_VER}`,
-  `/tag-topic-teaching-mgmt.svg?v=${TOPIC_BADGE_ASSET_VER}`,
+  `${publicAssetUrl('tag-topic-class-score.svg')}?v=${TOPIC_BADGE_ASSET_VER}`,
+  `${publicAssetUrl('tag-topic-learning-analysis.svg')}?v=${TOPIC_BADGE_ASSET_VER}`,
+  `${publicAssetUrl('tag-topic-teaching-mgmt.svg')}?v=${TOPIC_BADGE_ASSET_VER}`,
 ] as const;
 
 function topicPermutation(seed: number): [number, number, number] {

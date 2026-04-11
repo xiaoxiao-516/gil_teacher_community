@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
 import { useMatch, useNavigate } from 'react-router-dom';
 import { CommunityCard } from '../components/CommunityCard';
 import { useCommunityFeed } from '../context/CommunityFeedContext';
+import { publicAssetUrl } from '../lib/publicAssetUrl';
 
 /**
  * 瀑布流列数：默认 2 列（Pad 竖屏 / 窄屏）；≥900px 3 列（Pad 横屏）；≥1280px 4 列（PC）
@@ -13,7 +14,7 @@ function MasonryGrid({ children }: { children: ReactNode }) {
   );
 }
 
-const STUDENT_COMMUNITY_SWITCH_ICON_SRC = `/${encodeURIComponent('ic_转换_20.svg')}`;
+const STUDENT_COMMUNITY_SWITCH_ICON_SRC = publicAssetUrl(encodeURIComponent('ic_转换_20.svg'));
 
 type CommunityPageProps = {
   /** 列表与投稿、详情链接前缀：`/community`（弹窗详情）或 `/community-pad`（全屏详情） */

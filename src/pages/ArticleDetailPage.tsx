@@ -6,6 +6,7 @@ import { PostTagsAboveTitle } from '../components/PostTagPill';
 import { DEFAULT_DETAIL_BODY } from '../constants/articleDetail';
 import { useCommunityLikes } from '../context/CommunityLikesContext';
 import { isAllowedCoverUrl } from '../lib/coverValidation';
+import { publicAssetUrl } from '../lib/publicAssetUrl';
 import { copyTextToClipboard, getExternalShareUrl } from '../lib/shareLink';
 import { getPostById } from '../services/communityFeed';
 import type { CommunityPost } from '../types/community';
@@ -576,7 +577,7 @@ export function ArticleDetailFullPage() {
                 aria-label="返回"
               >
                 <img
-                  src="/pad-nav-back.png"
+                  src={publicAssetUrl('pad-nav-back.png')}
                   alt=""
                   width={30}
                   height={30}

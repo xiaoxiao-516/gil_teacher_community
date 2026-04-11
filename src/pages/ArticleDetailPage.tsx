@@ -7,7 +7,6 @@ import { DEFAULT_DETAIL_BODY } from '../constants/articleDetail';
 import { useCommunityLikes } from '../context/CommunityLikesContext';
 import { isAllowedCoverUrl } from '../lib/coverValidation';
 import { publicAssetUrl } from '../lib/publicAssetUrl';
-import { copyTextToClipboard, getExternalShareUrl } from '../lib/shareLink';
 import { getPostById } from '../services/communityFeed';
 import type { CommunityPost } from '../types/community';
 
@@ -66,26 +65,6 @@ function DetailAvatar({ name, src }: { name: string; src?: string }) {
   );
 }
 
-function ShareLinkButton({ url }: { url: string }) {
-  const [label, setLabel] = useState<'复制链接' | '已复制' | '复制失败'>('复制链接');
-
-  const onCopy = useCallback(async () => {
-    const ok = await copyTextToClipboard(url);
-    setLabel(ok ? '已复制' : '复制失败');
-    window.setTimeout(() => setLabel('复制链接'), 2000);
-  }, [url]);
-
-  return (
-    <button
-      type="button"
-      onClick={onCopy}
-      className="shrink-0 rounded-[10px] border border-line-2 bg-white px-3 py-1.5 text-[12px] font-medium leading-[1.5] text-gray-2 transition-colors hover:bg-fill-gray-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-2/35"
-    >
-      {label}
-    </button>
-  );
-}
-
 function formatPublishedDate(ymd: string): string {
   const parts = ymd.split('-').map((s) => parseInt(s, 10));
   if (parts.length !== 3 || parts.some((n) => Number.isNaN(n))) return ymd;
@@ -100,13 +79,11 @@ type ArticleDetailPanelProps = {
   presentation: ArticleDetailPresentation;
   onDismiss: () => void;
   titleId: string;
-  /** 列表路由前缀，用于拼对外分享 URL，如 /community、/community-pad */
-  shareBasePath: string;
 };
 
 const SWIPE_PAGE_INDICATOR_MS = 2000;
 
-function ArticleDetailPanel({ post, presentation, onDismiss, titleId, shareBasePath }: ArticleDetailPanelProps) {
+function ArticleDetailPanel({ post, presentation, onDismiss, titleId }: ArticleDetailPanelProps) {
   const { ensureBaseline, toggleLike, getState } = useCommunityLikes();
   const [slide, setSlide] = useState(0);
   const [swipePageIndicatorOn, setSwipePageIndicatorOn] = useState(false);
@@ -145,7 +122,6 @@ function ArticleDetailPanel({ post, presentation, onDismiss, titleId, shareBaseP
   }, [post.id]);
 
   const bodyText = (post.body ?? DEFAULT_DETAIL_BODY).trim();
-  const shareUrl = getExternalShareUrl(`${shareBasePath.replace(/\/$/, '')}/${post.id}`);
 
   const { liked, count } = getState(post.id);
   const mediaList =
@@ -321,7 +297,6 @@ function ArticleDetailPanel({ post, presentation, onDismiss, titleId, shareBaseP
                 <span className="shrink-0 tabular-nums">{formatPublishedDate(post.publishedDate)}</span>
               </p>
             </div>
-            <ShareLinkButton url={shareUrl} />
           </div>
 
           <div className="min-h-0 flex-1 overflow-y-auto px-6 py-2 text-[16px] font-normal leading-[1.75] text-gray-2">
@@ -414,7 +389,6 @@ function ArticleDetailPanel({ post, presentation, onDismiss, titleId, shareBaseP
               <span className="shrink-0 tabular-nums">{formatPublishedDate(post.publishedDate)}</span>
             </p>
           </div>
-          <ShareLinkButton url={shareUrl} />
           <button
             type="button"
             onClick={onDismiss}
@@ -516,7 +490,6 @@ export function ArticleDetailModal({ postId, onClose }: ArticleDetailModalProps)
         presentation="modal"
         onDismiss={onClose}
         titleId={titleId}
-        shareBasePath="/community"
       />
     </div>
   );
@@ -590,7 +563,6 @@ export function ArticleDetailFullPage() {
                 presentation="pad"
                 onDismiss={goList}
                 titleId={titleId}
-                shareBasePath="/community-pad"
               />
             </div>
           ),

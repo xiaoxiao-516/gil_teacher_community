@@ -404,7 +404,7 @@ export function ShareFeedbackModal({ open, onClose }: Props) {
               )}
             </section>
 
-            <p className="text-[14px] font-normal leading-[1.5] text-[#838bab]">{SUBMIT_DRAWER_FOOTNOTE}</p>
+            <p className="text-[12px] font-normal leading-[1.5] text-[#838bab]">{SUBMIT_DRAWER_FOOTNOTE}</p>
 
             {submitError ? (
               <p className="text-center text-[14px] text-[#e0443f]" role="alert">

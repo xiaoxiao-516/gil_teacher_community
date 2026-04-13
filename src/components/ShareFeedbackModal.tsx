@@ -21,8 +21,14 @@ const PHONE_PATTERN = /^1[3-9]\d{9}$/;
 /** 微信号：字母开头，总长 6–20，仅字母数字下划线连字符 */
 const WECHAT_PATTERN = /^[a-zA-Z][a-zA-Z0-9_-]{5,19}$/;
 
-const SUCCESS_MODAL_BODY =
+/** Toast 文案（对齐稿面 CN/B2-14，单行过长时允许换行） */
+const SUCCESS_TOAST_BODY =
   '感谢您的分享，优质内容入选后，运营小助手会在两个工作日与您联系哦～';
+
+const SUCCESS_TOAST_DURATION_MS = 2000;
+
+const SUBMIT_DRAWER_FOOTNOTE =
+  '每一份经验都无比珍贵！若内容入选，小助手将在 2 个工作日内联系您；若超时未回复，可能暂不匹配当前栏目规划，期待您的下次分享！';
 
 type ContactChannel = 'phone' | 'wechat';
 
@@ -86,7 +92,7 @@ export function ShareFeedbackModal({ open, onClose }: Props) {
   const [wechatId, setWechatId] = useState('');
   const [images, setImages] = useState<{ file: File; url: string }[]>([]);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  const [successModal, setSuccessModal] = useState(false);
+  const [successToast, setSuccessToast] = useState(false);
 
   const toggleTag = useCallback((label: string) => {
     setSelected((prev) => {
@@ -120,7 +126,7 @@ export function ShareFeedbackModal({ open, onClose }: Props) {
   }, []);
 
   const dismissSuccessAndClose = useCallback(() => {
-    setSuccessModal(false);
+    setSuccessToast(false);
     onClose();
   }, [onClose]);
 
@@ -141,7 +147,7 @@ export function ShareFeedbackModal({ open, onClose }: Props) {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== 'Escape') return;
-      if (successModal) {
+      if (successToast) {
         e.preventDefault();
         dismissSuccessAndClose();
       } else {
@@ -150,7 +156,13 @@ export function ShareFeedbackModal({ open, onClose }: Props) {
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [open, onClose, successModal, dismissSuccessAndClose]);
+  }, [open, onClose, successToast, dismissSuccessAndClose]);
+
+  useEffect(() => {
+    if (!successToast) return;
+    const t = window.setTimeout(() => dismissSuccessAndClose(), SUCCESS_TOAST_DURATION_MS);
+    return () => window.clearTimeout(t);
+  }, [successToast, dismissSuccessAndClose]);
 
   useEffect(() => {
     if (!open) return;
@@ -178,7 +190,7 @@ export function ShareFeedbackModal({ open, onClose }: Props) {
     setPhone('');
     setWechatId('');
     setSubmitError(null);
-    setSuccessModal(false);
+    setSuccessToast(false);
   }, [open]);
 
   const handleSubmit = useCallback(() => {
@@ -217,7 +229,7 @@ export function ShareFeedbackModal({ open, onClose }: Props) {
       }
     }
     setSubmitError(null);
-    setSuccessModal(true);
+    setSuccessToast(true);
   }, [contactChannel, description, phone, selected.size, wechatId]);
 
   if (!open) return null;
@@ -349,9 +361,6 @@ export function ShareFeedbackModal({ open, onClose }: Props) {
                 <span className="text-[#e0443f]">* </span>
                 联系方式
               </p>
-              <p className="mt-1 text-[14px] leading-[1.5] text-[#838bab]">
-                请选择一种方式，便于运营小助手与您联系。
-              </p>
               <div className="mt-4 flex flex-wrap items-center gap-6" role="radiogroup" aria-label="联系方式类型">
                 <label className="flex cursor-pointer items-center gap-2 text-[14px] leading-[1.5] text-gray-2">
                   <input
@@ -395,6 +404,8 @@ export function ShareFeedbackModal({ open, onClose }: Props) {
               )}
             </section>
 
+            <p className="text-[14px] font-normal leading-[1.5] text-[#838bab]">{SUBMIT_DRAWER_FOOTNOTE}</p>
+
             {submitError ? (
               <p className="text-center text-[14px] text-[#e0443f]" role="alert">
                 {submitError}
@@ -407,7 +418,7 @@ export function ShareFeedbackModal({ open, onClose }: Props) {
           <button
             type="button"
             onClick={handleSubmit}
-            disabled={!canSubmit || successModal}
+            disabled={!canSubmit || successToast}
             className="flex h-9 w-full min-w-[76px] items-center justify-center rounded-[18px] bg-primary-2 px-5 text-[14px] font-medium leading-[1.5] text-white transition-[filter] hover:brightness-[0.96] active:brightness-[0.9] disabled:cursor-not-allowed disabled:bg-primary-4 disabled:text-white disabled:hover:brightness-100 disabled:active:brightness-100"
           >
             提交
@@ -415,52 +426,24 @@ export function ShareFeedbackModal({ open, onClose }: Props) {
         </footer>
       </div>
 
-      {successModal ? (
-        <>
-          <button
-            type="button"
-            aria-label="关闭"
-            className="fixed inset-0 z-[80] bg-black/35"
-            onClick={dismissSuccessAndClose}
-          />
-          <div
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby={`${titleId}-success`}
-            className="fixed left-1/2 top-1/2 z-[90] flex w-[min(100vw-32px,400px)] -translate-x-1/2 -translate-y-1/2 flex-col gap-6 rounded-[16px] border-[0.5px] border-solid border-line-1 bg-white px-6 pb-5 pt-6 shadow-m"
-          >
-            <div className="flex w-full flex-col gap-2">
-              <div className="flex items-center gap-2">
-                <SuccessCircleCheckIcon />
-                <h3
-                  id={`${titleId}-success`}
-                  className="text-[20px] font-semibold leading-[1.5] text-gray-1"
-                >
-                  提交成功！
-                </h3>
-              </div>
-              <p className="pl-7 text-left text-[14px] font-normal leading-[1.5] text-gray-2">
-                {SUCCESS_MODAL_BODY}
-              </p>
-            </div>
-            <div className="flex w-full shrink-0 justify-end gap-3">
-              <button
-                type="button"
-                onClick={dismissSuccessAndClose}
-                className="flex h-9 min-w-[76px] shrink-0 items-center justify-center rounded-[18px] border border-solid border-line-2 bg-white px-5 text-[14px] font-medium leading-[1.5] text-gray-2 transition-colors hover:bg-fill-gray-1"
-              >
-                取消
-              </button>
-              <button
-                type="button"
-                onClick={dismissSuccessAndClose}
-                className="flex h-9 min-w-[76px] shrink-0 items-center justify-center rounded-[18px] bg-primary-2 px-5 text-[14px] font-medium leading-[1.5] text-white transition-[filter] hover:brightness-[0.96] active:brightness-[0.9]"
-              >
-                确认
-              </button>
-            </div>
+      {successToast ? (
+        <div
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+          className="pointer-events-none fixed bottom-[20%] left-1/2 z-[90] flex max-w-[min(calc(100vw-32px),360px)] -translate-x-1/2 justify-center px-4"
+        >
+          <div className="pointer-events-auto flex min-h-9 items-start gap-1 rounded-[24px] bg-[rgba(16,16,25,0.88)] px-2.5 py-2 shadow-lg backdrop-blur-[6px]">
+            <span className="mt-0.5 shrink-0" aria-hidden>
+              <SuccessCircleCheckIcon />
+            </span>
+            <p id={`${titleId}-success-toast`} className="min-w-0 text-[14px] font-normal leading-[1.5] text-white">
+              <span className="font-medium">提交成功！</span>
+              {' '}
+              {SUCCESS_TOAST_BODY}
+            </p>
           </div>
-        </>
+        </div>
       ) : null}
     </div>
   );

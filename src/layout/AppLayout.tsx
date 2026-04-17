@@ -92,7 +92,16 @@ export function AppLayout() {
                   }
                 >
                   <IconSidebarCommunity className="shrink-0" />
-                  社区
+                  <span className="flex min-w-0 flex-1 items-center gap-1">
+                    <span className="shrink-0 whitespace-nowrap">社区</span>
+                    <span
+                      lang="en"
+                      className="sidebar-nav-new-badge--breath inline-flex h-[12px] shrink-0 origin-left items-center justify-center rounded-tl-[7px] rounded-tr-[7px] rounded-br-[7px] rounded-bl-[2px] px-[3px] text-[9px] font-semibold uppercase leading-none tracking-wide text-white bg-[#FA5A57]"
+                      aria-hidden
+                    >
+                      New
+                    </span>
+                  </span>
                 </NavLink>
                 <NavLink
                   to="/community-pad"

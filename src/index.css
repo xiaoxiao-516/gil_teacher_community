@@ -194,3 +194,43 @@ body {
   z-index: 10000;
   will-change: transform, opacity;
 }
+
+/* 侧栏「New」：呼吸两轮后静止 2s 再循环；各段独立缓动（先缓起、峰略停感、再缓落） */
+@keyframes sidebar-new-breath {
+  0% {
+    transform: scale(1);
+    animation-timing-function: cubic-bezier(0.33, 0, 0.25, 1);
+  }
+  12.5% {
+    transform: scale(1.16);
+    animation-timing-function: cubic-bezier(0.25, 0, 0.4, 1);
+  }
+  25% {
+    transform: scale(1);
+    animation-timing-function: cubic-bezier(0.33, 0, 0.25, 1);
+  }
+  37.5% {
+    transform: scale(1.16);
+    animation-timing-function: cubic-bezier(0.25, 0, 0.4, 1);
+  }
+  50% {
+    transform: scale(1);
+    animation-timing-function: linear;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.sidebar-nav-new-badge--breath {
+  animation: sidebar-new-breath 4s linear infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar-nav-new-badge--breath {
+    animation: none;
+    will-change: auto;
+  }
+}
+

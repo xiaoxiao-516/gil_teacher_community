@@ -3,7 +3,7 @@
 # 目标文件：教师端-社区 ly4UfSlEOGmuBImHw2uu0m，node 0:1（由 MCP generate_figma_design 生成各 captureId）。
 # 用法：先为每页调用 MCP 拿到新 captureId，替换下方 ID 后再执行本脚本；或逐条复制 open 命令。
 
-BASE="http://localhost:5173"
+BASE="http://localhost:51730"
 delay="figmadelay=2500"
 
 open_capture() {

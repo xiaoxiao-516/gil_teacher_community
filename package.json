@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "open:community": "open http://localhost:51730/community",
     "build": "tsc -b && vite build",
     "build:portable": "tsc -b && vite build",
     "pack:preview": "npm run build && cd dist && zip -r ../教师社区-预览包.zip .",

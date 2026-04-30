@@ -40,7 +40,7 @@ export function CommunityCard({ post, detailBase = '/community' }: CommunityCard
       role="link"
       tabIndex={0}
       aria-label={post.title ? `${post.title}，进入详情` : '进入详情'}
-      className="break-inside-avoid cursor-pointer overflow-hidden rounded-[12px] bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-1"
+      className="break-inside-avoid mb-[12px] flex cursor-pointer flex-col overflow-hidden rounded-[12px] bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-1"
       onClick={() => navigate(detailPath)}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -49,25 +49,29 @@ export function CommunityCard({ post, detailBase = '/community' }: CommunityCard
         }
       }}
     >
-      <div className={`relative mb-3 w-full overflow-hidden rounded-[12px] bg-fill-gray-1 ${aspectClass}`}>
-        {coverOk ? (
-          <img
-            src={post.coverUrl}
-            alt=""
-            className="h-full w-full object-cover"
-            loading="lazy"
-          />
-        ) : (
-          <div className="flex h-full w-full flex-col items-center justify-center gap-1 p-4 text-center text-[12px] text-gray-4">
-            <span>封面格式不支持</span>
-            <span className="text-[10px]">请使用 JPG / PNG</span>
-          </div>
-        )}
+      <div className="w-full shrink-0 rounded-[12px] bg-white p-[2px]">
+        <div
+          className={`relative overflow-hidden rounded-[10px] bg-fill-gray-1 ${aspectClass}`}
+        >
+          {coverOk ? (
+            <img
+              src={post.coverUrl}
+              alt=""
+              className="h-full w-full rounded-[10px] object-cover"
+              loading="lazy"
+            />
+          ) : (
+            <div className="flex h-full w-full flex-col items-center justify-center gap-1 p-4 text-center text-[12px] text-gray-4">
+              <span>封面格式不支持</span>
+              <span className="text-[10px]">请使用 JPG / PNG</span>
+            </div>
+          )}
+        </div>
       </div>
 
-      <div className="flex flex-col gap-1.5 px-0 pt-0 pb-2">
+      <div className="flex min-w-0 flex-col gap-1.5 bg-white px-3 pb-4 pt-4">
         {post.topicBadgeUrls.length > 0 || cardTags.length > 0 ? (
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex min-w-0 w-full flex-nowrap items-center gap-2 overflow-hidden">
             {post.topicBadgeUrls.map((src, bidx) => (
               <TopicBadgeFromUrl key={`${post.id}-topic-${bidx}`} src={src} />
             ))}

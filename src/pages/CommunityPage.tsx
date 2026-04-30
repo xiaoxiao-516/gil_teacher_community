@@ -6,11 +6,16 @@ import { publicAssetUrl } from '../lib/publicAssetUrl';
 
 /**
  * 瀑布流列数：默认 2 列（Pad 竖屏 / 窄屏）；≥900px 3 列（Pad 横屏）；≥1280px 4 列（PC）
- * 对应设计稿 1000×600 主内容区约 831px → 3 列
+ * 横向 columnGap:12px；纵向由 CommunityCard 上 `mb-[12px]` 控制（勿再包一层大 margin 的 div）
  */
 function MasonryGrid({ children }: { children: ReactNode }) {
   return (
-    <div className="columns-2 gap-6 min-[900px]:columns-3 xl:columns-4">{children}</div>
+    <div
+      className="columns-2 min-[900px]:columns-3 xl:columns-4"
+      style={{ columnGap: 12 }}
+    >
+      {children}
+    </div>
   );
 }
 
@@ -75,7 +80,7 @@ export function CommunityPage({ routePrefix = '/community' }: CommunityPageProps
   }, [ptrState, runPtrRefresh]);
 
   return (
-    <div className="flex h-full min-h-0 flex-col bg-gradient-to-b from-[#f5faff] from-[53%] to-white">
+    <div className="flex h-full min-h-0 flex-col bg-[#F5FAFF]">
       <header className="flex h-16 shrink-0 items-center justify-between gap-4 px-6">
         <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-3 gap-y-1">
           <h1 className="shrink-0 text-[20px] font-semibold leading-tight text-gray-1">{pageTitle}</h1>
@@ -140,9 +145,7 @@ export function CommunityPage({ routePrefix = '/community' }: CommunityPageProps
         ) : (
           <MasonryGrid>
             {posts.map((p) => (
-              <div key={p.id} className="mb-6">
-                <CommunityCard post={p} detailBase={routePrefix} />
-              </div>
+              <CommunityCard key={p.id} post={p} detailBase={routePrefix} />
             ))}
           </MasonryGrid>
         )}

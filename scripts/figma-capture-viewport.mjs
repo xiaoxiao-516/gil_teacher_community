@@ -23,7 +23,7 @@ const hash = new URLSearchParams({
   figmaendpoint: endpoint,
   figmadelay: '3000',
 });
-const url = `http://127.0.0.1:5173${path.startsWith('/') ? path : `/${path}`}#${hash.toString()}`;
+const url = `http://127.0.0.1:51730${path.startsWith('/') ? path : `/${path}`}#${hash.toString()}`;
 
 const browser = await chromium.launch({ headless: true });
 const page = await browser.newPage();

@@ -17,6 +17,43 @@ body {
     sans-serif;
 }
 
+.sidebar-icon {
+  mask: var(--sidebar-icon-url) center / contain no-repeat;
+  -webkit-mask: var(--sidebar-icon-url) center / contain no-repeat;
+}
+
+.sidebar-icon--publish {
+  --sidebar-icon-url: url('/sidebar-icon-publish.svg');
+}
+
+.sidebar-icon--calendar {
+  --sidebar-icon-url: url('/sidebar-icon-calendar.svg');
+}
+
+.sidebar-icon--report {
+  --sidebar-icon-url: url('/sidebar-icon-report.svg');
+}
+
+.sidebar-icon--resource {
+  --sidebar-icon-url: url('/sidebar-icon-resource.svg');
+}
+
+.sidebar-icon--data {
+  --sidebar-icon-url: url('/sidebar-icon-data.svg');
+}
+
+.sidebar-icon--message {
+  --sidebar-icon-url: url('/sidebar-icon-message.svg');
+}
+
+.sidebar-icon--community {
+  --sidebar-icon-url: url('/sidebar-icon-community.svg');
+}
+
+.sidebar-icon--chevron-enter {
+  --sidebar-icon-url: url('/sidebar-icon-chevron-enter.svg');
+}
+
 /* 设计稿基准 1000×600，大屏按比例放大可视区域 */
 .app-scale {
   min-height: 100%;
